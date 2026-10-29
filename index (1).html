@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0f1d">
+<title>ScootFix Store</title>
+<style>
+:root{color-scheme:dark;--bg:#0c0f1d;--card:#161a2e;--card2:#1d2240;--ink:#eceffa;--mut:#8f98b8;--ac:#8b7bff;--onac:#0c0f1d;--mn:#4de0b0;--wa:#1fa855;--bd:#272d50;--rd:#ff5d6c;--yw:#f2b01e}
+[data-theme=light]{color-scheme:light;--bg:#f2f4fa;--card:#fff;--card2:#ebeef8;--ink:#14182b;--mut:#5b6486;--ac:#5b49e6;--onac:#fff;--mn:#08966c;--bd:#dce1f0;--rd:#d92d3f;--yw:#b87a00}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",Tahoma,"Noto Sans Arabic",system-ui,sans-serif;transition:background .25s,color .25s}
+svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;color:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:20;background:var(--bg);padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 6px;border-bottom:1px solid var(--bd)}
+.hw{max-width:900px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.top h1{font-size:1rem;margin:0;line-height:1.2}
+.top small{display:block;color:var(--mut);font-size:.7rem;font-weight:400;line-height:1.3}
+.ib{width:34px;height:34px;border-radius:10px;border:1px solid var(--bd);background:var(--card);display:grid;place-items:center;position:relative}
+.ib b{position:absolute;top:-6px;inset-inline-end:-6px;min-width:20px;height:20px;border-radius:10px;background:var(--rd);color:#fff;font-size:.72rem;display:grid;place-items:center;padding:0 5px}
+.ib b:empty,.ib b[data-n="0"]{display:none}
+.row{display:flex;gap:8px;align-items:center}
+.lang{display:flex;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:3px}
+.lang button{background:none;border:0;color:var(--mut);padding:3px 8px;border-radius:7px;font-size:.74rem}
+.lang button[aria-pressed=true]{background:var(--ac);color:var(--onac);font-weight:700}
+.srow{display:flex;gap:8px;align-items:center}.srow .search{flex:1}
+html.emb .top{display:none}
+html.emb header{padding-top:8px}
+.search{position:relative}
+.search svg{position:absolute;inset-inline-start:12px;top:50%;width:17px;height:17px;transform:translateY(-50%);color:var(--mut);pointer-events:none;transition:color .2s}
+.search:focus-within svg{color:var(--ac)}
+#q{width:100%;height:36px;padding:0 14px;padding-inline-start:36px;border:1px solid var(--bd);border-radius:999px;background:var(--card2);color:var(--ink);font:inherit;font-size:.86rem;-webkit-appearance:none;appearance:none;transition:border-color .2s,background .2s}
+#q:focus{border-color:var(--ac);background:var(--card);outline:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 22%,transparent)}
+#q::-webkit-search-cancel-button{-webkit-appearance:none;height:14px;width:14px;margin-inline-start:6px;border-radius:50%;background:var(--mut) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7L7 17'/%3E%3C/svg%3E") center/10px no-repeat;opacity:.8}
+#q::placeholder{color:var(--mut);opacity:1}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:1px solid var(--bd);background:var(--card);color:var(--mut);font-size:.78rem}
+.chips button svg{width:15px;height:15px}
+.chips button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:var(--onac);font-weight:700}
+main{max-width:900px;margin:0 auto;padding:14px 16px calc(110px + env(safe-area-inset-bottom,0px))}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;font-size:.78rem;color:var(--mut)}
+select,input,textarea{font:inherit;color:var(--ink)}
+.bar select{padding:5px 9px;font-size:.78rem;border-radius:999px;border:1px solid var(--bd);background:var(--card)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;animation:in .3s ease both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pi{aspect-ratio:4/3;background:var(--card2);display:grid;place-items:center;color:var(--ac);position:relative}
+.pi svg{width:46px;height:46px}
+.pi img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;display:block}
+.tag{position:absolute;top:8px;inset-inline-start:8px;font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:8px;background:var(--mn);color:var(--onac)}
+.tag.out{background:var(--rd);color:#fff}
+.pb{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.pb h3{margin:0;font-size:.95rem;line-height:1.35}
+.pb p{margin:0;color:var(--mut);font-size:.78rem;line-height:1.4;flex:1}
+.pr{font-weight:700;color:var(--mn);font-size:1.02rem;margin-top:4px}
+.add{margin-top:6px;border:0;border-radius:11px;background:var(--ac);color:var(--onac);padding:9px;font-weight:700;font-size:.88rem;display:flex;justify-content:center;align-items:center;gap:6px}
+.add:disabled{background:var(--card2);color:var(--mut);cursor:not-allowed}
+.add svg{width:18px;height:18px}
+button:active{transform:scale(.97)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--mn);outline-offset:2px}
+.empty{text-align:center;color:var(--mut);padding:40px 10px}
+.info{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;font-size:.84rem;color:var(--mut);margin-top:18px}
+#fbar{position:fixed;inset-inline:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--wa);color:#fff;border:0;border-radius:16px;padding:13px 16px;display:none;justify-content:space-between;align-items:center;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+#fbar.on{display:flex}
+#scrim{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s}
+#sheet{position:fixed;z-index:41;inset-inline:0;bottom:0;max-height:92vh;background:var(--bg);border-top:1px solid var(--bd);border-radius:22px 22px 0 0;transform:translateY(105%);transition:transform .3s ease;display:flex;flex-direction:column;max-width:700px;margin:0 auto}
+body.open #scrim{opacity:1;pointer-events:auto}
+body.open #sheet{transform:none}
+body.open{overflow:hidden}
+.sh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--bd)}
+.sh h2{margin:0;font-size:1.1rem}
+.sb{overflow-y:auto;padding:12px 16px;flex:1}
+.li{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.li .n{flex:1;min-width:0}.li .n b{display:block;font-size:.9rem;line-height:1.3}.li .n small{color:var(--mut)}
+.qty{display:flex;align-items:center;gap:2px;background:var(--card2);border-radius:10px}
+.qty button{width:32px;height:32px;border:0;background:none;font-size:1.2rem;font-weight:700}
+.qty span{min-width:22px;text-align:center;font-weight:700}
+.fm label{display:block;font-size:.82rem;color:var(--mut);margin:10px 0 4px}
+.fm input,.fm textarea,.fm select{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--bd);background:var(--card)}
+.fm textarea{resize:vertical;min-height:60px}
+.sf{padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--bd);background:var(--bg)}
+.tot{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.92rem;color:var(--mut)}
+.tot.g{color:var(--ink);font-size:1.12rem;font-weight:700;margin-bottom:10px}
+.send{width:100%;border:0;border-radius:14px;background:var(--wa);color:#fff;padding:14px;font-weight:700;font-size:1rem;display:flex;justify-content:center;gap:8px;align-items:center}
+.send{text-decoration:none}
+.send[aria-disabled=true]{opacity:.5;pointer-events:none}
+.clr{background:none;border:0;color:var(--rd);font-size:.84rem;padding:6px 0}
+#toast{position:fixed;inset-inline:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:var(--bg);padding:11px 14px;border-radius:12px;font-size:.88rem;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="hw">
+ <div class="top"><div><h1 id="ttl"></h1><small id="sub"></small></div>
+  <div class="lang" role="group"><button data-l="ar">عربي</button><button data-l="fr">FR</button><button data-l="en">EN</button></div></div>
+ <div class="srow"><div class="search"><svg viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3"/></svg><input id="q" type="search" enterkeyhint="search"></div><button class="ib" id="cb" aria-label="Cart"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6M9 20.5v.01M17 20.5v.01"/></svg><b id="cn" data-n="0"></b></button></div>
+ <div class="chips" id="chips"></div>
+</div></header>
+<main>
+ <div class="bar"><span id="cnt"></span><select id="sort"></select></div>
+ <div class="grid" id="grid"></div>
+ <div class="empty" id="empty" hidden></div>
+ <div class="info" id="info"></div>
+</main>
+<button id="fbar"><span id="fl"></span><span id="ft"></span></button>
+<div id="scrim"></div>
+<section id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+ <div class="sh"><h2 id="ch"></h2><button class="ib" id="cx" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <div class="sb"><div id="items"></div><button class="clr" id="clr"></button><div class="fm" id="fm"></div></div>
+ <div class="sf"><div class="tot"><span id="l1"></span><span id="v1"></span></div><div class="tot"><span id="l2"></span><span id="v2"></span></div><div class="tot g"><span id="l3"></span><span id="v3"></span></div>
+ <a class="send" id="send" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/></svg><span id="sl"></span></a></div>
+</section>
+<div id="toast" role="status"></div>
+<script>
+/* ===== إعدادات المتجر (عدّلها بسهولة) ===== */
+const PH="212693772942";          // رقم واتساب
+const DELIVERY=30;                // سعر التوصيل
+const FREE_FROM=500;              // توصيل مجاني ابتداءً من هذا المبلغ (0 لتعطيله)
+const CUR={ar:"درهم",fr:"DH",en:"MAD"};
+
+/* ===== المنتجات =====
+ id, c(الفئة), n[عربي,فرنسي,إنجليزي], d[وصف عربي,فرنسي,إنجليزي], p(السعر), s(1 متوفر / 0 غير متوفر), img(رابط صورة اختياري), tag(شارة اختيارية: "new" | "sale") */
+const PRODUCTS=[
+{id:12,c:"chg",n:["شاحن 42 فولت 2A","Chargeur 42V 2A","42V 2A charger"],d:["لبطارية 36 فولت (10S). مدخل 100-240V وقابس أوروبي.","Pour batterie 36 V (10S). Entrée 100-240V, prise EU.","For 36 V (10S) batteries. 100-240V input, EU plug."],p:179,s:1,img:"images/ch42.jpg"},
+{id:11,c:"chg",n:["شاحن 54.6 فولت 2A","Chargeur 54,6V 2A","54.6V 2A charger"],d:["لبطارية 48 فولت (13S). موصل GX16 ثلاثي الأقطاب، ضوء أحمر أثناء الشحن وأخضر عند الاكتمال.","Pour batterie 48 V (13S). Connecteur GX16 3 broches, voyant rouge en charge, vert une fois chargé.","For 48 V (13S) batteries. 3-pin GX16 connector, red light while charging, green when full."],p:299,s:1,img:"images/ch54.jpg"},
+{id:10,c:"ctl",n:["أفيشور (شاشة العرض) مع الكابل","Afficheur (écran) avec câble","Display board with cable"],d:["لوحة العرض الإلكترونية كاملة مع الكابل، تعرض السرعة والبطارية والأوضاع.","Carte d'affichage complète avec câble: vitesse, batterie et modes.","Complete electronic display with cable: speed, battery and ride modes."],p:199,s:1,img:"images/display.jpg"},
+{id:9,c:"ctl",n:["دواسة السرعة (مقبض التسارع)","Accélérateur (gâchette)","Throttle accelerator"],d:["لسكوترات شاومي M365 وPro، بكابل وموصل جاهز.","Pour trottinettes Xiaomi M365 et Pro, avec câble et connecteur.","For Xiaomi M365 and Pro scooters, with cable and connector."],p:69,s:1,img:"images/throttle.jpg"},
+{id:8,c:"ctl",n:["غطاء شاشة بلاستيكي للأفيشور","Cache plastique pour afficheur","Plastic dashboard cover"],d:["غطاء أسود لامع بزر التشغيل لحماية الأفيشور.","Cache noir brillant avec bouton marche pour protéger l'afficheur.","Glossy black cover with power button to protect the display."],p:39,s:1,img:"images/cover.jpg"},
+{id:7,c:"tires",n:["إطار مقاس 8½ مع أنبوب داخلي","Pneu 8½ avec chambre à air","8½ tire with inner tube"],d:["إطار خارجي مع الأنبوب الداخلي، جاهز للتركيب.","Pneu extérieur avec chambre à air, prêt à monter.","Outer tire with inner tube, ready to fit."],p:199,s:1,img:"images/tiretube.jpg"},
+{id:6,c:"tires",n:["إطار خارجي مقاس 8½ (قطعة)","Pneu extérieur 8½ (pièce)","8½ outer tire (single)"],d:["إطار خارجي فقط بدون أنبوب.","Pneu extérieur seul, sans chambre à air.","Outer tire only, without inner tube."],p:139,s:1,img:"images/tire.jpg"},
+{id:5,c:"tires",n:["إطار خارجي مطاطي مصمت","Pneu extérieur caoutchouc plein","Solid rubber outer tire"],d:["إطار مطاطي مثقّب مصمت بدون هواء، لا ينفجر.","Pneu plein alvéolé en caoutchouc, sans air, increvable.","Solid honeycomb rubber tire, airless and puncture-proof."],p:149,s:1,img:"images/solid.jpg"},
+{id:4,c:"tires",n:["أنبوب داخلي بصمام 90°","Chambre à air valve coudée 90°","Inner tube, 90° valve"],d:["أنبوب داخلي بصمام نحاسي مائل بزاوية 90°.","Chambre à air avec valve laiton coudée à 90°.","Inner tube with brass valve bent at 90°."],p:69,s:1,img:"images/tube.jpg"},
+{id:3,c:"nickel",n:["سلك نيكل 0.1×8 مم، طول 10 متر","Ruban nickel 0,1×8 mm, 10 m","Nickel strip 0.1×8 mm, 10 m"],d:["شريط نيكل بعرض 8 مم وسماكة 0.1 مم، لفة 10 أمتار، للحام الخلايا.","Ruban nickel 8 mm de large, 0,1 mm d'épaisseur, rouleau de 10 m, pour souder les cellules.","Nickel strip 8 mm wide, 0.1 mm thick, 10 m roll, for welding cells."],p:79,s:1,img:"images/nickel.jpg"},
+{id:2,c:"acc",n:["حامل هاتف معدني للمقود","Support téléphone métal pour guidon","Metal handlebar phone holder"],d:["حامل ألمنيوم متين يثبت على المقود، مع مفتاح تركيب وشرائط مطاطية.","Support aluminium solide à fixer au guidon, avec clé de montage et bandes en caoutchouc.","Sturdy aluminium holder that clamps to the handlebar, with install key and rubber strips."],p:49,s:1,img:"images/holder.jpg"},
+{id:1,c:"acc",n:["قفل سلسلة بمفتاحين","Antivol à câble avec 2 clés","Cable lock with 2 keys"],d:["كابل مقوّى مع قفل معدني ومفتاحين. لحماية السكوتر من السرقة.","Câble renforcé avec serrure métallique et 2 clés. Protège la trottinette du vol.","Reinforced cable with metal lock and 2 keys. Keeps your scooter safe from theft."],p:49,s:1,img:"images/lock.jpg"}
+];
+
+const CATS={all:"M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",cells:"M7 7h10v13H7zM10 4h4v3h-4z",battery:"M3 8h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zM20 11v2",bms:"M5 5h14v14H5zM9 9h6v6H9z",nickel:"M4 10h16v4H4zM8 10v4M12 10v4M16 10v4",tires:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",brakes:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z",ctl:"M13 2L4 14h7l-1 8 9-12h-7z",chg:"M9 3v5M15 3v5M7 8h10v4a5 5 0 0 1-10 0zM12 17v4",lgt:"M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z",acc:"M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"};
+const ic=k=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${CATS[k]}"/></svg>`;
+
+const T={
+ar:{t:"متجر ScootFix",s:"قطع غيار وبطاريات وأدوات",q:"ابحث عن قطعة…",all:"الكل",
+ cat:{cells:"خلايا",battery:"بطاريات",bms:"BMS وحماية",nickel:"نيكل وتجميع",tires:"إطارات",brakes:"فرامل",ctl:"تحكم ومحرك",chg:"شواحن",lgt:"إضاءة",acc:"إكسسوارات"},
+ sort:["الأحدث","السعر: الأقل","السعر: الأعلى"],n:"منتج",add:"أضف للسلة",out:"غير متوفر",ask:"اسأل عن السعر",new:"جديد",sale:"عرض",
+ info:"الأسعار بالدرهم وقد تتغير حسب التوفر. الطلب يتم عبر واتساب والدفع عند الاستلام، ونؤكد معك السعر النهائي والتوفر قبل الشحن.",
+ cart:"سلة الطلب",empty:"لا توجد منتجات مطابقة.",ce:"السلة فارغة.",clear:"إفراغ السلة",view:"عرض السلة",
+ sub:"المجموع الفرعي",del:"التوصيل",free:"مجاني",tot:"الإجمالي",send:"إرسال الطلب عبر واتساب",
+ f:{name:"الاسم الكامل *",phone:"رقم الهاتف",city:"المدينة",addr:"العنوان",note:"ملاحظات (موديل السكوتر…)",mode:"طريقة الاستلام",d:"توصيل",p:"استلام من المتجر"},
+ nm:"أدخل اسمك أولًا",added:"أُضيف إلى السلة",ask2:"سعر هذا المنتج حسب الطلب، سنؤكده عبر واتساب.",
+ m:{h:"مرحبًا، أريد طلب:",tot:"الإجمالي",c:"بيانات الزبون",nm:"الاسم",ph:"الهاتف",ct:"المدينة",ad:"العنوان",md:"الاستلام",nt:"ملاحظات",ask:"(السعر عند الاستفسار)"}},
+fr:{t:"Boutique ScootFix",s:"Pièces, batteries et outils",q:"Chercher une pièce…",all:"Tout",
+ cat:{cells:"Cellules",battery:"Batteries",bms:"BMS et protection",nickel:"Nickel et montage",tires:"Pneus",brakes:"Freins",ctl:"Contrôle et moteur",chg:"Chargeurs",lgt:"Éclairage",acc:"Accessoires"},
+ sort:["Nouveautés","Prix croissant","Prix décroissant"],n:"produits",add:"Ajouter",out:"Indisponible",ask:"Prix sur demande",new:"Nouveau",sale:"Promo",
+ info:"Prix en dirhams, susceptibles de varier selon la disponibilité. Commande via WhatsApp, paiement à la livraison. Nous confirmons le prix final et la disponibilité avant l'envoi.",
+ cart:"Panier",empty:"Aucun produit correspondant.",ce:"Le panier est vide.",clear:"Vider le panier",view:"Voir le panier",
+ sub:"Sous-total",del:"Livraison",free:"Gratuite",tot:"Total",send:"Envoyer la commande sur WhatsApp",
+ f:{name:"Nom complet *",phone:"Téléphone",city:"Ville",addr:"Adresse",note:"Notes (modèle de trottinette…)",mode:"Réception",d:"Livraison",p:"Retrait en boutique"},
+ nm:"Saisissez d'abord votre nom",added:"Ajouté au panier",ask2:"Prix sur demande, confirmé via WhatsApp.",
+ m:{h:"Bonjour, je souhaite commander :",tot:"Total",c:"Coordonnées",nm:"Nom",ph:"Téléphone",ct:"Ville",ad:"Adresse",md:"Réception",nt:"Notes",ask:"(prix sur demande)"}},
+en:{t:"ScootFix Store",s:"Parts, batteries and tools",q:"Search a part…",all:"All",
+ cat:{cells:"Cells",battery:"Batteries",bms:"BMS and protection",nickel:"Nickel and build",tires:"Tires",brakes:"Brakes",ctl:"Control and motor",chg:"Chargers",lgt:"Lights",acc:"Accessories"},
+ sort:["Newest","Price: low","Price: high"],n:"items",add:"Add to cart",out:"Out of stock",ask:"Ask for price",new:"New",sale:"Sale",
+ info:"Prices are in dirhams and may change with availability. Orders go through WhatsApp with cash on delivery; we confirm the final price and stock before shipping.",
+ cart:"Order cart",empty:"No matching products.",ce:"Your cart is empty.",clear:"Clear cart",view:"View cart",
+ sub:"Subtotal",del:"Delivery",free:"Free",tot:"Total",send:"Send order on WhatsApp",
+ f:{name:"Full name *",phone:"Phone",city:"City",addr:"Address",note:"Notes (scooter model…)",mode:"Receiving",d:"Delivery",p:"Store pickup"},
+ nm:"Enter your name first",added:"Added to cart",ask2:"Price on request, confirmed over WhatsApp.",
+ m:{h:"Hello, I'd like to order:",tot:"Total",c:"Customer details",nm:"Name",ph:"Phone",ct:"City",ad:"Address",md:"Receiving",nt:"Notes",ask:"(price on request)"}}
+};
+
+const $=id=>document.getElementById(id);
+let L="ar",TH="dark",cat="all",CART={},FD={name:"",phone:"",city:"",addr:"",note:"",mode:"d"};
+try{L=localStorage.getItem("lang")||"";TH=localStorage.getItem("theme")||"dark";CART=JSON.parse(localStorage.getItem("cart")||"{}");FD=Object.assign(FD,JSON.parse(localStorage.getItem("cust")||"{}"))}catch(e){}
+if(!T[L]){const n=(navigator.language||"ar").slice(0,2);L=T[n]?n:"ar"}
+try{const qp=new URLSearchParams(location.search);if(T[qp.get("lang")])L=qp.get("lang");if(qp.get("theme")==="light"||qp.get("theme")==="dark")TH=qp.get("theme")}catch(e){}
+const li=i=>L==="ar"?0:L==="fr"?1:2;
+const money=v=>v.toLocaleString(L==="ar"?"ar-MA":L==="fr"?"fr-MA":"en-US")+" "+CUR[L];
+const save=()=>{try{localStorage.setItem("cart",JSON.stringify(CART))}catch(e){}};
+const saveC=()=>{try{localStorage.setItem("cust",JSON.stringify(FD))}catch(e){}};
+const byId=id=>PRODUCTS.find(p=>p.id==id);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let toastT;const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),1800)};
+
+function applyTheme(){document.documentElement.dataset.theme=TH;document.querySelector("meta[name=theme-color]").content=TH==="dark"?"#0c0f1d":"#f2f4fa"}
+function head(){const u=T[L];
+ document.documentElement.lang=L;document.documentElement.dir=L==="ar"?"rtl":"ltr";document.title=u.t;
+ $("ttl").textContent=u.t;$("sub").textContent=u.s;$("q").placeholder=u.q;$("info").textContent=u.info;$("ch").textContent=u.cart;
+ document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===L));
+ $("chips").innerHTML=[["all",u.all],...Object.entries(u.cat).filter(([k])=>PRODUCTS.some(p=>p.c===k))].map(([k,v])=>`<button data-c="${k}" aria-pressed="${k===cat}">${ic(k)}<span>${v}</span></button>`).join("");
+ const sv=$("sort").value||"0";$("sort").innerHTML=u.sort.map((t,i)=>`<option value="${i}">${t}</option>`).join("");$("sort").value=sv}
+function grid(){const u=T[L],i=li(),q=$("q").value.trim().toLowerCase(),s=+$("sort").value;
+ let r=PRODUCTS.filter(p=>(cat==="all"||p.c===cat)&&(!q||(p.n[i]+" "+p.d[i]+" "+p.n.join(" ")).toLowerCase().includes(q)));
+ if(s===1)r.sort((a,b)=>(a.p||1e9)-(b.p||1e9));else if(s===2)r.sort((a,b)=>b.p-a.p);else r.sort((a,b)=>b.id-a.id);
+ $("cnt").textContent=r.length+" "+u.n;
+ $("grid").innerHTML=r.map(p=>`<article class="pc"><div class="pi">${ic(p.c)}${p.img?`<img src="${esc(p.img)}" alt="${esc(p.n[i])}" loading="lazy" onerror="this.remove()">`:""}${!p.s?`<span class="tag out">${u.out}</span>`:p.tag?`<span class="tag">${u[p.tag]}</span>`:""}</div><div class="pb"><h3>${p.n[i]}</h3><p>${p.d[i]}</p><div class="pr">${p.p?money(p.p):u.ask}</div><button class="add" data-id="${p.id}" ${p.s?"":"disabled"}>${p.s?`<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>${u.add}`:u.out}</button></div></article>`).join("");
+ $("empty").hidden=r.length>0;$("empty").textContent=u.empty}
+function totals(){let sub=0,n=0,ask=false;for(const[id,q]of Object.entries(CART)){const p=byId(id);if(!p)continue;n+=q;if(p.p)sub+=p.p*q;else ask=true}
+ const dl=FD.mode==="p"||n===0||(FREE_FROM&&sub>=FREE_FROM)?0:DELIVERY;return{sub,n,dl,tot:sub+dl,ask}}
+function bar(){const u=T[L],t=totals();$("cn").textContent=t.n||"";$("cn").dataset.n=t.n;
+ $("fbar").classList.toggle("on",t.n>0&&!document.body.classList.contains("open"));$("fl").textContent=u.view+" ("+t.n+")";$("ft").textContent=t.sub?money(t.sub):""}
+function sheet(){const u=T[L],i=li(),t=totals(),ids=Object.keys(CART).filter(id=>byId(id));
+ $("items").innerHTML=ids.length?ids.map(id=>{const p=byId(id),q=CART[id];return `<div class="li"><div class="n"><b>${p.n[i]}</b><small>${p.p?money(p.p):u.ask}</small></div><div class="qty"><button data-q="-" data-id="${id}" aria-label="-">−</button><span>${q}</span><button data-q="+" data-id="${id}" aria-label="+">+</button></div></div>`}).join(""):`<p class="empty">${u.ce}</p>`;
+ $("clr").textContent=u.clear;$("clr").hidden=!ids.length;
+ const f=u.f;$("fm").hidden=!ids.length;
+ $("fm").innerHTML=`<label>${f.name}</label><input id="f_name" autocomplete="name" value="${esc(FD.name)}"><label>${f.phone}</label><input id="f_phone" type="tel" autocomplete="tel" value="${esc(FD.phone)}"><label>${f.mode}</label><select id="f_mode"><option value="d"${FD.mode==="d"?" selected":""}>${f.d}</option><option value="p"${FD.mode==="p"?" selected":""}>${f.p}</option></select>${FD.mode==="d"?`<label>${f.city}</label><input id="f_city" autocomplete="address-level2" value="${esc(FD.city)}"><label>${f.addr}</label><input id="f_addr" autocomplete="street-address" value="${esc(FD.addr)}">`:""}<label>${f.note}</label><textarea id="f_note">${esc(FD.note)}</textarea>`;
+ $("l1").textContent=u.sub;$("v1").textContent=money(t.sub);$("l2").textContent=u.del;$("v2").textContent=t.dl?money(t.dl):u.free;
+ $("l3").textContent=u.tot;$("v3").textContent=money(t.tot)+(t.ask?" +":"");$("sl").textContent=u.send;$("send").setAttribute("aria-disabled",String(!ids.length));wa()}
+function all(){head();grid();bar();sheet()}
+function open(o){document.body.classList.toggle("open",o);$("sheet").setAttribute("aria-hidden",String(!o));bar();if(o)sheet()}
+function setQ(id,d){const q=(CART[id]||0)+d;if(q<=0)delete CART[id];else CART[id]=Math.min(q,99);save();bar();sheet()}
+function waUrl(){const u=T[L],m=u.m,i=li(),t=totals();
+ let s=m.h+"\n\n";
+ for(const[id,q]of Object.entries(CART)){const p=byId(id);if(!p)continue;s+=`• ${p.n[i]} × ${q} = ${p.p?money(p.p*q):m.ask}\n`}
+ s+=`\n${u.sub}: ${money(t.sub)}\n${u.del}: ${t.dl?money(t.dl):u.free}\n*${m.tot}: ${money(t.tot)}${t.ask?" +":""}*\n\n${m.c}\n${m.nm}: ${FD.name}\n`;
+ if(FD.phone)s+=`${m.ph}: ${FD.phone}\n`;
+ s+=`${m.md}: ${FD.mode==="d"?u.f.d:u.f.p}\n`;
+ if(FD.mode==="d"){if(FD.city)s+=`${m.ct}: ${FD.city}\n`;if(FD.addr)s+=`${m.ad}: ${FD.addr}\n`}
+ if(FD.note)s+=`${m.nt}: ${FD.note}\n`;
+ return "https://wa.me/"+PH+"?text="+encodeURIComponent(s)}
+function wa(){try{$("send").href=waUrl()}catch(e){}}
+const _lg=document.querySelector(".lang");if(_lg)_lg.onclick=e=>{const l=e.target.dataset.l;if(l){L=l;try{localStorage.setItem("lang",l)}catch(x){}all()}};
+$("chips").onclick=e=>{const b=e.target.closest("button");if(b){cat=b.dataset.c;head();grid()}};
+$("q").oninput=grid;$("sort").onchange=grid;
+$("grid").onclick=e=>{const b=e.target.closest(".add");if(!b||b.disabled)return;const p=byId(b.dataset.id);setQ(p.id,1);toast(T[L].added+(p.p?"":" · "+T[L].ask2));try{navigator.vibrate&&navigator.vibrate(8)}catch(x){}};
+$("fbar").onclick=$("cb").onclick=()=>open(true);$("cx").onclick=$("scrim").onclick=()=>open(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")open(false)});
+$("items").onclick=e=>{const b=e.target.closest("[data-q]");if(b)setQ(b.dataset.id,b.dataset.q==="+"?1:-1)};
+$("clr").onclick=()=>{CART={};save();bar();sheet()};
+$("fm").oninput=e=>{const k=e.target.id.slice(2);if(k in FD){FD[k]=e.target.value;saveC();wa()}};
+$("fm").onchange=e=>{if(e.target.id==="f_mode"){FD.mode=e.target.value;saveC();sheet()}};
+$("send").onclick=e=>{if(!FD.name.trim()){e.preventDefault();toast(T[L].nm);const f=$("f_name");f&&f.focus();return}wa()};
+try{if(window.parent!==window)document.documentElement.classList.add("emb")}catch(e){document.documentElement.classList.add("emb")}
+addEventListener("message",e=>{if(e.source!==window.parent)return;const d=e.data;if(!d||d.scootfix!==1)return;
+ if(T[d.lang]&&d.lang!==L){L=d.lang;all()}
+ if((d.theme==="light"||d.theme==="dark")&&d.theme!==TH){TH=d.theme;applyTheme()}});
+try{window.parent.postMessage({scootfixReady:1},"*")}catch(e){}
+applyTheme();all();
+</script>
+</body>
+</html>
