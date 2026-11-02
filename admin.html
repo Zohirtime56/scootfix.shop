@@ -1,0 +1,31 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ScootFix Admin</title>
+<style>body{font:16px system-ui;margin:0;padding:16px;background:#0c0f1d;color:#eef;max-width:640px;margin-inline:auto}
+h2{margin:22px 0 8px}input,textarea,select{width:100%;box-sizing:border-box;padding:10px;margin:4px 0;border-radius:10px;border:1px solid #334;background:#161a2e;color:#eef;font:inherit}
+button{padding:12px 16px;border:0;border-radius:10px;background:#8b7cff;color:#fff;font:inherit;font-weight:700;margin:6px 0}
+.card{background:#12162a;border:1px solid #2a2f4a;border-radius:14px;padding:12px;margin:10px 0}small{color:#9aa}</style></head><body>
+<h1>لوحة تحكم ScootFix</h1>
+<p><small>عدّل هنا ثم حمّل ملف config.json وارفعه فوق القديم في مستودع المتجر على GitHub. التطبيق يقرأه تلقائياً بدون تحديث.</small></p>
+<h2>1) إعلان داخل التطبيق</h2><div class="card">
+<input id="aar" placeholder="العربية"><input id="afr" placeholder="Français"><input id="aen" placeholder="English">
+<label><small>ينتهي في (اختياري)</small></label><input id="aun" type="date"></div>
+<h2>2) رقم واتساب</h2><div class="card"><input id="ph" value="212693772942" inputmode="numeric"></div>
+<h2>3) إخفاء أعطال (عنوان الإنجليزية، سطر لكل عطل)</h2><div class="card"><textarea id="hide" rows="3"></textarea></div>
+<h2>4) أعطال جديدة</h2><div id="fl"></div><button onclick="addF()">+ عطل جديد</button>
+<h2>5) الإعلانات</h2><div class="card"><label><input type="checkbox" id="aon" checked style="width:auto"> تفعيل الإعلانات البينية</label>
+<small>أقل فاصل بين إعلانين (ثوانٍ)</small><input id="gap" type="number" value="180" min="90">
+<small>عدد الأعطال المفتوحة قبل الإعلان</small><input id="fpa" type="number" value="4" min="3"></div>
+<button onclick="dl()">تحميل config.json</button>
+<script>
+const C={bat:"البطارية",brk:"الفرامل",tir:"الإطارات",ctl:"المحرك",lgt:"الإضاءة"};
+function addF(){const d=document.createElement("div");d.className="card";d.innerHTML=`<select class="c">${Object.entries(C).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select>
+<select class="sv"><option value="tip">نصيحة</option><option value="warn2">تحذير</option><option value="danger">خطير</option></select>
+${["ar","fr","en"].map(l=>`<input class="t_${l}" placeholder="العنوان ${l}"><input class="s_${l}" placeholder="وصف قصير ${l}"><textarea class="st_${l}" rows="3" placeholder="الخطوات ${l} (سطر لكل خطوة)"></textarea>`).join("")}
+<button onclick="this.parentNode.remove()">حذف</button>`;fl.appendChild(d)}
+function dl(){const v=id=>document.getElementById(id).value.trim(),L=["ar","fr","en"];
+const faults=[...fl.children].map(d=>{const q=s=>d.querySelector(s).value.trim(),o={c:q(".c"),sv:q(".sv"),t:{},s:{},st:{}};
+L.forEach(l=>{o.t[l]=q(".t_"+l);o.s[l]=q(".s_"+l);o.st[l]=q(".st_"+l).split("\n").map(x=>x.trim()).filter(Boolean)});return o}).filter(o=>o.t.en);
+const c={announce:{ar:v("aar"),fr:v("afr"),en:v("aen"),until:v("aun")},phone:v("ph"),hide:v("hide").split("\n").map(x=>x.trim()).filter(Boolean),faults,
+ads:{enabled:aon.checked,gapSec:Math.max(90,+gap.value||180),faultsPerAd:Math.max(3,+fpa.value||4)}};
+const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(c,null,2)],{type:"application/json"}));a.download="config.json";a.click()}
+</script></body></html>

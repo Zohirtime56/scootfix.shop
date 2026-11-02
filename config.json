@@ -1,0 +1,7 @@
+{
+  "announce": { "ar": "", "fr": "", "en": "", "until": "" },
+  "phone": "212693772942",
+  "hide": [],
+  "faults": [],
+  "ads": { "enabled": true, "gapSec": 180, "faultsPerAd": 4 }
+}
