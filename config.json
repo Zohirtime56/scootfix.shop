@@ -1,7 +1,16 @@
 {
-  "announce": { "ar": "", "fr": "", "en": "", "until": "" },
+  "announce": {
+    "ar": "خصم 10% على الشواحن هذا الأسبوع",
+    "fr": "",
+    "en": "",
+    "until": "2026-11-03"
+  },
   "phone": "212693772942",
   "hide": [],
   "faults": [],
-  "ads": { "enabled": true, "gapSec": 180, "faultsPerAd": 4 }
+  "ads": {
+    "enabled": true,
+    "gapSec": 180,
+    "faultsPerAd": 4
+  }
 }
